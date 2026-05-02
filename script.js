@@ -1,46 +1,58 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const cards = document.querySelectorAll(".project-card.interactive-card");
+
   const modal = document.getElementById("project-modal");
+  const overlay = document.getElementById("modal-overlay");
 
-  const modalTitle = document.getElementById("modal-title");
-  const modalImage = document.getElementById("modal-image");
-  const modalDescription = document.getElementById("modal-description");
-  const modalSkills = document.getElementById("modal-skills");
-  const modalTech = document.getElementById("modal-tech");
-  const modalCode = document.getElementById("modal-code");
-  const modalLink = document.getElementById("modal-link");
+  const title = document.getElementById("modal-title");
+  const image = document.getElementById("modal-image");
+  const description = document.getElementById("modal-description");
+  const skills = document.getElementById("modal-skills");
+  const tech = document.getElementById("modal-tech");
+  const code = document.getElementById("modal-code");
+  const link = document.getElementById("modal-link");
 
-  const closeModal = document.getElementById("modal-close");
-  const modalOverlay = document.getElementById("modal-overlay");
+  const closeBtn = document.getElementById("modal-close");
 
-  cards.forEach((card) => {
+  cards.forEach(card => {
     card.addEventListener("click", () => {
-      modalTitle.textContent = card.dataset.title;
-      modalImage.src = card.dataset.image;
-      modalImage.alt = card.dataset.title;
-      modalDescription.textContent = card.dataset.description;
 
-      modalSkills.textContent = "Skills Used: " + (card.dataset.skills || "N/A");
-      modalTech.textContent = "Technologies Used: " + (card.dataset.tech || "N/A");
-      modalCode.textContent = "Code Styles Used: " + (card.dataset.code || "N/A");
+      title.textContent = card.dataset.title;
+      image.src = card.dataset.image;
+      description.textContent = card.dataset.description;
 
-      modalLink.href = card.dataset.link;
-      modalLink.textContent = card.dataset.linkLabel || "Open Project";
+      skills.textContent = "Skills Used: " + (card.dataset.skills || "N/A");
+      tech.textContent = "Technologies Used: " + (card.dataset.tech || "N/A");
+      code.textContent = "Code Styles Used: " + (card.dataset.code || "N/A");
+
+      // 🔥 IMPORTANT FIX
+      const projectLink = card.dataset.link;
+      const label = card.dataset.linkLabel || "Open Project";
+
+      if (projectLink && projectLink !== "") {
+        link.href = projectLink;
+        link.style.display = "inline-block";
+      } else {
+        link.removeAttribute("href");
+        link.style.display = "inline-block"; // still show button
+      }
+
+      link.textContent = label;
 
       modal.classList.remove("hidden");
     });
   });
 
-  function closeProjectModal() {
+  function closeModal() {
     modal.classList.add("hidden");
   }
 
-  closeModal.addEventListener("click", closeProjectModal);
-  modalOverlay.addEventListener("click", closeProjectModal);
+  closeBtn.addEventListener("click", closeModal);
+  overlay.addEventListener("click", closeModal);
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeProjectModal();
-    }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
   });
+
 });
