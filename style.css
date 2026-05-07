@@ -582,5 +582,12 @@ li {
 
   .modal-image {
   height: 240px;
+  .footer {
+  text-align: center;
+  padding: 30px;
+  margin-top: 40px;
+  color: #5b3b4a;
+  font-size: 0.95rem;
+}
 }
 }
